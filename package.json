@@ -1,0 +1,32 @@
+{
+  "name": "gelato",
+  "version": "0.0.1",
+  "description": "verbose backend framework",
+  "main": "Gelato.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/youssef-ahamid/gelato.git"
+  },
+  "keywords": [
+    "backend",
+    "express",
+    "backend framework",
+    "api"
+  ],
+  "author": "youssef-ahamid",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/youssef-ahamid/gelato/issues"
+  },
+  "homepage": "https://github.com/youssef-ahamid/gelato#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.1",
+    "mongoose": "^6.5.5",
+    "morgan": "^1.10.0",
+    "node-fetch": "^3.2.10"
+  }
+}
