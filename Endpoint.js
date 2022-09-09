@@ -58,7 +58,7 @@ class Endpoint {
 			const query = this.getQuery(req);
 			const data = this.getData(req, res);
 
-			data.updated_at = Date.now();
+			data.updatedAt = Date.now();
 
 			const updatedThing = await this.crud.update(req, query, data);
 			await this.runHooks('update', updatedThing);
