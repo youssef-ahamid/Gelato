@@ -11,7 +11,7 @@ module.exports.e = function(
 	message = 'Something went wrong. Try again later.',
 	error
 ) {
-	console.error(error);
+	console.error(errorCode, message, error || '');
 	res.status(errorCode).json({
 		success: false,
 		message,

@@ -2,12 +2,15 @@ const crud = require('./crud.js');
 const { attempt, e, s } = require('./utils.js');
 const api = require('./api.js');
 const { slugify } = require('./parser.js');
+const authorize = require('./middleware/validatePermissions.js');
 
 class Endpoint {
 	constructor(options = {}, db) {
 		this.route = options.name.toLowerCase();
 		this.crud = new crud(options.name, options.object, db);
 		this.webhooks = options.webhooks || [];
+		this.middlewares = options.middlewares || [];
+		this.authenticate = options.authenticate;
 	}
 
 	async getAll(req, res) {
@@ -163,11 +166,11 @@ module.exports.createEndpoint = (ep, db, app) => {
 	const route = slugify(ep.name);
 
 	app
-		.get(`/${route}`, endpoint.getAll.bind(endpoint))
-		.get(`/${route}/:id`, endpoint.getOne.bind(endpoint))
-		.patch(`/${route}/:id`, endpoint.update.bind(endpoint))
-		.post(`/${route}`, endpoint.create.bind(endpoint))
-		.delete(`/${route}/:id`, endpoint.remove.bind(endpoint));
+		.get(`/${route}`, authorize(endpoint.authenticate && `read:${route}`), ...endpoint.middlewares, endpoint.getAll.bind(endpoint))
+		.get(`/${route}/:id`, authorize(endpoint.authenticate && `read:${route}.id`), ...endpoint.middlewares, endpoint.getOne.bind(endpoint))
+		.patch(`/${route}/:id`, authorize(endpoint.authenticate && `update:${route}.id`), ...endpoint.middlewares, endpoint.update.bind(endpoint))
+		.post(`/${route}`, authorize(endpoint.authenticate && `create:${route}`), ...endpoint.middlewares, endpoint.create.bind(endpoint))
+		.delete(`/${route}/:id`, authorize(endpoint.authenticate && `delete:${route}.id`), ...endpoint.middlewares, endpoint.remove.bind(endpoint));
 
 	return endpoint;
 };
