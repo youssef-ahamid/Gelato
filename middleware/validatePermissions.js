@@ -12,7 +12,6 @@ module.exports = (scope) => {
             if (error) return e(403, res, "Invalid JWT", error)
 
             if (scope.includes('.id')) scope = scope.replace('.id', `.${req.params.id}`);
-            console.log({id: req.params.id, decoded, scope})
             if (!decoded.scopes.includes(scope)) return e(403, res, 'Insufficient permissions')
 
             next()

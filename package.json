@@ -1,6 +1,6 @@
 {
   "name": "gelato.js",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "A verbose backend JavaScript framework",
   "main": "Gelato.js",
   "repository": {
